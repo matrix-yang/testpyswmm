@@ -35,7 +35,7 @@ def repliceSubArea(tableName, nextTableName, areaName, index, value):
 def readResult(filestr, tableName, nextTableName, nodeName, nodeType):
     start, end = getTableByName(filestr, tableName, nextTableName)
     current = 0
-    for line in filestr.splitlines:
+    for line in filestr.splitlines():
         if (current > start and current < end):
             if (line.find(nodeName) >= 0 and line.find(nodeType) >= 0):
                 str = line.split()
@@ -58,22 +58,22 @@ def getTableByName(filestr, tableName, nextTableName):
     return start, end
 
 def changeManning(value):
-    repliceManning('gq1', 'j1', 'j2', value)
+    repliceManning('gq1', 'j1', 'j2', str(value))
 
 def changeNimperv(value):
-    repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 1, value)
+    repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 1, str(value))
 
 def changeNperv(value):
-    repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 2, value)
+    repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 2, str(value))
 
 def changeSimperv(value):
-    repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 3, value)
+    repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 3, str(value))
 
 def changeSperv(value):
-    repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 4, value)
+    repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 4, str(value))
 
 def changeCZero(value):
-    repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 5, value)
+    repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 5, str(value))
 
 
 # 使用全局变量内部声明
@@ -85,7 +85,7 @@ def runInp():
 
     #repliceManning('gq1', 'j1', 'j2', '0.03')
     #repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 1, '0.04')
-    changeCZero('23')
+    changeCZero(23)
     newinp = open('D:\SWMMH\Examples\\test2.inp', 'w')
     newinp.write(inpfile)
     newinp.close()
@@ -95,7 +95,10 @@ def runInp():
 
 def runRpt():
     rpt = open('D:\SWMMH\Examples\\test.rpt', 'r')
-    avg, max = readResult(rpt, 'Node Depth Summary', 'Node Inflow Summary', 'pfk1', 'OUTFALL')
+    con=''
+    for line in rpt:
+        con += line
+    avg, max = readResult(con, 'Node Depth Summary', 'Node Inflow Summary', 'pfk1', 'OUTFALL')
     rpt.close()
     print(avg, max)
 
@@ -109,7 +112,8 @@ def runRpt():
 # print(N_impervRange)
 
 if __name__ == "__main__":
-    runInp()
-    print(inpfile)
+    # runInp()
+    runRpt()
 
-# runRpt()
+
+
