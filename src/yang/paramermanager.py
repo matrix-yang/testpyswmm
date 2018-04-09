@@ -94,6 +94,13 @@ def changeSperv(value):
 def changeCZero(value):
     repliceSubArea('SUBAREAS', 'INFILTRATION', 'zmj1', 5, str(value))
 
+def getResult(path='D:\SWMMH\Examples\\test2.rpt'):
+    rpt = open(path, 'r')
+    con = ''
+    for line in rpt:
+        con += line
+    return readResult(con, 'Node Depth Summary', 'Node Inflow Summary', 'pfk1', 'OUTFALL')
+
 def readFile(path='D:\SWMMH\Examples\\test2.inp'):
     global inpfile
     inp = open(path, 'r')
