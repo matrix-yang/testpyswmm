@@ -55,8 +55,8 @@ def readResult(filestr, tableName, nextTableName, nodeName, nodeType):
         if (current > start and current < end):
             if (line.find(nodeName) >= 0 and line.find(nodeType) >= 0):
                 str = line.split()
-                avg = str[2]
-                max = str[3]
+                avg = float(str[2])
+                max = float(str[3])
                 return avg, max
         current += 1
     return 'no value', 'no value'
