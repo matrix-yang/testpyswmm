@@ -2,30 +2,32 @@ from pyswmm import Simulation
 from src.yang.paramer import Paramer
 import src.yang.paramermanager as pm
 import numpy as np
-import time
+#变量总步数
+step=4
+
 allImpact = 0
 
-manningRange = np.linspace(0.011, 0.024, 10, True)
+manningRange = np.linspace(0.011, 0.024, step, True)
 manning = Paramer(manningRange, 'changeManning')
 
 # N-imperv 0.005-0.05
-NimpervRange = np.linspace(0.005, 0.05, 10, True)
+NimpervRange = np.linspace(0.005, 0.05, step, True)
 Nimperv = Paramer(NimpervRange, 'changeNimperv')
 
 # N-perv 0.005-0.5
-NpervRange = np.linspace(0.005, 0.5, 10, True)
+NpervRange = np.linspace(0.005, 0.5, step, True)
 Nperv = Paramer(NpervRange, 'changeNperv')
 
 # S-imperv 0.2-10
-SimpervRange = np.linspace(0.2, 10, 10, True)
+SimpervRange = np.linspace(0.2, 10, step, True)
 Simperv = Paramer(SimpervRange, 'changeSimperv')
 
 # S-perv 2-10
-SpervRange = np.linspace(2, 10, 10, True)
+SpervRange = np.linspace(2, 10, step, True)
 Sperv = Paramer(SpervRange, 'changeSperv')
 
 # Pct-Zero 5-85
-PctZeroRange = np.linspace(5, 85, 10, True)
+PctZeroRange = np.linspace(5, 85, step, True)
 PctZero = Paramer(PctZeroRange, 'changeCZero')
 paramers = []
 paramers.append(manning)
@@ -35,8 +37,6 @@ paramers.append(Simperv)
 paramers.append(Sperv)
 paramers.append(PctZero)
 
-subImpact = []
-
 def initInp(paramers):
     for p in paramers:
         str = 'pm.' + p.getName()
@@ -44,18 +44,21 @@ def initInp(paramers):
         pm.saveFile()
 
 def getSubImpact(paramers):
+    #global step
     avg, max = pm.getResult()
-    global subImpact
+    #asImpact=[]
+    subImpact=[]
     inpfile=pm.getCurrentInp()
+    #for s in range(step-1):
     for p in paramers:
         str='pm.'+p.getName()
-        print('---------------',p.nextNum)
         eval(str)(p.nextNum())
         pm.saveFile()
         runModel()
         avgNext, maxNext = pm.getResult()
         subImpact.append(avgNext-avg)
         pm.setinpfile(inpfile)
+        #asImpact.append(subImpact)
     return subImpact
 
 def runModel(path='D:\SWMMH\Examples\\test2.inp'):
@@ -67,6 +70,14 @@ def getAllImpact(tValue):
     avgf=float(avg)
     return avgf - tValue
 
+def SelectIdxOfParamer():
+    global paramers
+    subImpact=getSubImpact(paramers)
+    npSI=np.array(subImpact)
+    print(npSI)
+    idxSeq=np.argsort(-npSI)
+    print(idxSeq)
+
 def test():
     global paramers
     global allImpact
@@ -74,7 +85,8 @@ def test():
     initInp(paramers)
     runModel()
     allImpact=getAllImpact(0.04)
-    getSubImpact(paramers)
+    print(allImpact)
+    subImpact=getSubImpact(paramers)
     print(subImpact)
 
 test()

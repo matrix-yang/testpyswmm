@@ -20,6 +20,9 @@ class Paramer:
         self.index += 1
         return rs
 
+    def backIdx(self):
+        self.optIdx(-1);
+
     def getArr(self):
         return self.arr
 
