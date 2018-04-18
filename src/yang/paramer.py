@@ -1,9 +1,14 @@
 class Paramer:
+    name=''
     arr=[]
     index=0;
 
-    def __init__(self,arr):
+    def __init__(self,arr,name):
         self.arr = arr
+        self.name=name
+
+    def getCurrent(self):
+        return self.arr[self.index]
 
     def get(self,index):
         return self.arr[index]
@@ -12,7 +17,13 @@ class Paramer:
         if (self.index == len(self.arr)):
             return
         yield self.arr[self.index]
-        self.index+=1
+        self.index += 1
 
     def getArr(self):
         return self.arr
+
+    def optIdx(self,num):
+        self.index=self.index+num
+
+    def getName(self):
+        return self.name
