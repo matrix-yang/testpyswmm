@@ -1,7 +1,6 @@
-def pr(v):
-    print("pr--------------",v)
+import src.yang.test2 as t
 
 
-str='pr'
+str='t.pr'
 
 eval(str)(1)

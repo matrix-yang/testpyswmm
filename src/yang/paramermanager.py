@@ -107,6 +107,15 @@ def readFile(path='D:\SWMMH\Examples\\test2.inp'):
     for line in inp:
         inpfile += line
 
+def getCurrentInp():
+    global inpfile
+    return inpfile
+
+def setinpfile(inpstr):
+    global  inpfile
+    inpfile=inpstr
+    saveFile()
+
 def saveFile(path='D:\SWMMH\Examples\\test2.inp'):
     global inpfile
     newinp = open(path, 'w')
@@ -147,7 +156,7 @@ def runRpt():
 # N-imperv 0.005-0.05
 # N_impervRange=np.linspace(0.005,0.05, 10, True)
 # print(N_impervRange)
-
+readFile()
 if __name__ == "__main__":
     readFile()
     print(getManning())

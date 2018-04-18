@@ -1,7 +1,7 @@
 class Paramer:
     name=''
     arr=[]
-    index=0;
+    index=1;
 
     def __init__(self,arr,name):
         self.arr = arr
@@ -16,8 +16,9 @@ class Paramer:
     def nextNum(self):
         if (self.index == len(self.arr)):
             return
-        yield self.arr[self.index]
+        rs= self.arr[self.index]
         self.index += 1
+        return rs
 
     def getArr(self):
         return self.arr
