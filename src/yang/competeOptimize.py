@@ -3,7 +3,7 @@ from src.yang.paramer import Paramer
 import src.yang.paramermanager as pm
 import numpy as np
 #变量总步数
-step=4
+step=2
 
 allImpact = 0
 
